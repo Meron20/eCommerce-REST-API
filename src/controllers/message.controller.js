@@ -45,5 +45,4 @@ export const deleteMessage = asyncHandler(async( req, res) => {
      await order.save()
 
      res.sendStatus(204)
-
 })

@@ -8,7 +8,7 @@ export const createOrder = asyncHandler(async (req, res) => {
  const {  products } = req.body;
  const user = req.user._id;
 
- if (!products) {
+ if (!products || !Array.isArray(products) || products.length === 0) {
     return res.status(400).json({ message: "Products are required."})
  }
   
@@ -18,7 +18,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 })
 
 export const getOrders = asyncHandler(async(req, res) => {
-  const orders = await Order.find()
+  const orders = await Order.find({ user: req.user._id })
   .populate('user', 'name')
   .populate({
     path: "products.productId",
